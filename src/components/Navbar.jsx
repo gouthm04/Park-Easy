@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { MapPin, User, LogIn, Menu, Sun, Moon } from 'lucide-react';
 import './Navbar.css';
 
 const Navbar = () => {
   const [theme, setTheme] = useState(localStorage.getItem('theme') || 'dark');
+  const location = useLocation();
+  // Dummy state for whether the user has listings
+  const isHost = false;
 
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
@@ -24,10 +27,14 @@ const Navbar = () => {
         </Link>
         
         <div className="navbar-links">
-          <Link to="/" className="nav-link">Home</Link>
-          <Link to="/search" className="nav-link">Find Parking</Link>
-          <Link to="/host" className="nav-link">Become a Host</Link>
-          <Link to="/about" className="nav-link">About</Link>
+          <Link to="/" className={`nav-link ${location.pathname === '/' ? 'active' : ''}`}>Home</Link>
+          <Link to="/search" className={`nav-link ${location.pathname === '/search' ? 'active' : ''}`}>Find Parking</Link>
+          <Link to="/dashboard" className={`nav-link ${location.pathname === '/dashboard' ? 'active' : ''}`}>Dashboard</Link>
+          {isHost ? (
+            <Link to="/host/listings" className={`nav-link ${location.pathname === '/host/listings' ? 'active' : ''}`}>My Listings</Link>
+          ) : (
+            <Link to="/host" className={`nav-link ${location.pathname === '/host' ? 'active' : ''}`}>Become a Host</Link>
+          )}
         </div>
         
         <div className="navbar-actions">

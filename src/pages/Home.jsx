@@ -91,12 +91,10 @@ const Home = () => {
           variants={staggerContainer}
         >
           <motion.h1 variants={fadeUp}>
-            Find the Perfect <br />
-            <span className="text-accent-gradient">Parking Spot</span> in Seconds
+            Find Parking or <span className="text-accent-gradient">Earn by Sharing</span> Your Space
           </motion.h1>
           <motion.p variants={fadeUp} className="hero-subtitle">
-            Don't waste time driving around. Book premium parking spaces in advance 
-            with secure payments and real-time availability.
+            Book trusted parking spaces from local hosts, or list your own driveway, garage, or parking lot to earn passive income.
           </motion.p>
           
           <motion.div variants={fadeUp} className="search-bar-glass">
@@ -146,39 +144,83 @@ const Home = () => {
           viewport={{ once: true, amount: 0.3 }}
           variants={fadeUp}
         >
-          <h2>How It <span className="text-accent-gradient">Works</span></h2>
-          <p className="text-secondary">Three simple steps to your perfect parking spot.</p>
+          <h2>How ParkEasy <span className="text-accent-gradient">Works</span></h2>
+          <p className="text-secondary">A seamless experience for both drivers and hosts.</p>
         </motion.div>
+        
+        <div className="marketplace-split">
+          <div className="marketplace-side">
+            <h3 className="marketplace-title">For Drivers</h3>
+            <motion.div 
+              className="steps-grid steps-vertical"
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.3 }}
+              variants={staggerContainer}
+            >
+              <motion.div variants={fadeUp} className="step-card">
+                <div className="step-icon-wrapper">
+                  <Search size={32} />
+                </div>
+                <h3>1. Search Nearby</h3>
+                <p className="text-secondary">Find available parking spaces based on your location and schedule.</p>
+              </motion.div>
+              
+              <motion.div variants={fadeUp} className="step-card">
+                <div className="step-icon-wrapper">
+                  <CreditCard size={32} />
+                </div>
+                <h3>2. Reserve Instantly</h3>
+                <p className="text-secondary">Secure your spot with a quick and easy cashless payment.</p>
+              </motion.div>
+              
+              <motion.div variants={fadeUp} className="step-card">
+                <div className="step-icon-wrapper">
+                  <Car size={32} />
+                </div>
+                <h3>3. Park Confidently</h3>
+                <p className="text-secondary">Navigate directly to your space and park without the hassle.</p>
+              </motion.div>
+            </motion.div>
+          </div>
 
-        <motion.div 
-          className="steps-container"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.3 }}
-          variants={staggerContainer}
-        >
-          <motion.div variants={fadeUp} className="step-card">
-            <div className="step-icon-wrapper"><MapPin size={32} /></div>
-            <h3>1. Find</h3>
-            <p className="text-secondary">Search for parking near your destination.</p>
-          </motion.div>
-          
-          <div className="step-connector"></div>
-          
-          <motion.div variants={fadeUp} className="step-card">
-            <div className="step-icon-wrapper"><CreditCard size={32} /></div>
-            <h3>2. Reserve</h3>
-            <p className="text-secondary">Book instantly with secure payments.</p>
-          </motion.div>
-          
-          <div className="step-connector"></div>
-          
-          <motion.div variants={fadeUp} className="step-card">
-            <div className="step-icon-wrapper"><Car size={32} /></div>
-            <h3>3. Park</h3>
-            <p className="text-secondary">Arrive and park seamlessly.</p>
-          </motion.div>
-        </motion.div>
+          <div className="marketplace-divider"></div>
+
+          <div className="marketplace-side">
+            <h3 className="marketplace-title host-title">For Hosts</h3>
+            <motion.div 
+              className="steps-grid steps-vertical"
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.3 }}
+              variants={staggerContainer}
+            >
+              <motion.div variants={fadeUp} className="step-card">
+                <div className="step-icon-wrapper host-icon">
+                  <MapPin size={32} />
+                </div>
+                <h3>1. List Your Space</h3>
+                <p className="text-secondary">Add your driveway, garage, or lot in minutes with photos and pricing.</p>
+              </motion.div>
+              
+              <motion.div variants={fadeUp} className="step-card">
+                <div className="step-icon-wrapper host-icon">
+                  <Shield size={32} />
+                </div>
+                <h3>2. Approve Bookings</h3>
+                <p className="text-secondary">Review requests and manage your availability with complete control.</p>
+              </motion.div>
+              
+              <motion.div variants={fadeUp} className="step-card">
+                <div className="step-icon-wrapper host-icon">
+                  <Star size={32} />
+                </div>
+                <h3>3. Earn Money</h3>
+                <p className="text-secondary">Get paid automatically for every successful reservation.</p>
+              </motion.div>
+            </motion.div>
+          </div>
+        </div>
       </section>
 
       {/* Features Section */}
@@ -205,22 +247,22 @@ const Home = () => {
             <div className="feature-icon-wrapper">
               <Shield className="feature-icon" size={28} />
             </div>
-            <h3>Secure Bookings</h3>
-            <p className="text-secondary">Your payments are fully encrypted and securely processed. Verified spaces only.</p>
+            <h3>Secure Payments</h3>
+            <p className="text-secondary">Your transactions are encrypted and securely processed. Get paid safely.</p>
           </motion.div>
           <motion.div variants={fadeUp} className="feature-card glass-panel">
             <div className="feature-icon-wrapper">
               <Clock className="feature-icon" size={28} />
             </div>
-            <h3>Flexible Time</h3>
-            <p className="text-secondary">Extend your parking duration with a simple tap from your phone. No stress.</p>
+            <h3>Flexible Booking</h3>
+            <p className="text-secondary">Book for an hour, a day, or a month. Easily extend your time with a single tap.</p>
           </motion.div>
           <motion.div variants={fadeUp} className="feature-card glass-panel">
             <div className="feature-icon-wrapper">
-              <Map className="feature-icon" size={28} />
+              <Star className="feature-icon" size={28} />
             </div>
-            <h3>Prime Locations</h3>
-            <p className="text-secondary">Access to exclusive, high-demand parking spots right where you need them.</p>
+            <h3>Earn as a Host</h3>
+            <p className="text-secondary">List your unused driveway or garage and turn empty space into passive income.</p>
           </motion.div>
         </motion.div>
       </section>
