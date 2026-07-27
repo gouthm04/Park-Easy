@@ -1,0 +1,217 @@
+.auth-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6rem 2rem 4rem 2rem;
+}
+
+.auth-card {
+  display: flex;
+  max-width: 1000px;
+  width: 100%;
+  border-radius: 24px;
+  overflow: hidden;
+  background: var(--bg-card);
+  backdrop-filter: blur(16px);
+  border: 1px solid var(--border-glass);
+  box-shadow: var(--shadow-glass);
+}
+
+.auth-image-side {
+  flex: 1;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  display: none;
+}
+
+.auth-image-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, var(--accent-primary-transparent-20), rgba(0,0,0,0.7));
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 3rem;
+  color: white;
+}
+
+.auth-image-overlay h2 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  line-height: 1.2;
+}
+
+.auth-image-overlay p {
+  font-size: 1.1rem;
+  opacity: 0.9;
+}
+
+.auth-form-side {
+  flex: 1;
+  padding: 3rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.auth-form-side h2 {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+  color: var(--text-primary);
+}
+
+.auth-subtitle {
+  color: var(--text-secondary);
+  margin-bottom: 2.5rem;
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.input-group {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.input-icon {
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-secondary);
+  pointer-events: none;
+  transition: var(--transition-smooth);
+}
+
+.auth-input {
+  width: 100%;
+  padding: 1rem 1rem 1rem 3rem;
+  background: var(--glass-input-bg);
+  border: 1px solid var(--border-glass);
+  color: var(--text-primary);
+  border-radius: 12px;
+  font-family: var(--font-main);
+  outline: none;
+  transition: var(--transition-smooth);
+}
+
+.auth-input:focus {
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 15px var(--accent-primary-transparent-20);
+  background: var(--glass-input-focus);
+}
+
+.auth-input:focus + .input-icon,
+.auth-input:not(:placeholder-shown) + .input-icon {
+  color: var(--accent-primary);
+}
+
+.password-toggle-icon {
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: var(--transition-smooth);
+  background: none;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+.password-toggle-icon:hover {
+  color: var(--text-primary);
+}
+
+.auth-input.password-field {
+  padding-right: 3rem;
+}
+
+.auth-submit-btn {
+  width: 100%;
+  padding: 1rem;
+  border-radius: 12px;
+  font-size: 1.1rem;
+  margin-top: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.auth-divider {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  margin: 2rem 0;
+  color: var(--text-secondary);
+}
+
+.auth-divider::before,
+.auth-divider::after {
+  content: '';
+  flex: 1;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.auth-divider::before { margin-right: 1rem; }
+.auth-divider::after { margin-left: 1rem; }
+
+.social-auth-btn {
+  width: 100%;
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  background: var(--glass-btn-bg);
+  border: 1px solid var(--border-glass);
+  color: var(--text-primary);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+  font-weight: 500;
+  font-family: var(--font-main);
+}
+
+.social-auth-btn:hover {
+  background: var(--glass-btn-hover);
+  transform: translateY(-2px);
+}
+
+.auth-link-text {
+  text-align: center;
+  margin-top: 2rem;
+  color: var(--text-secondary);
+}
+
+.auth-link {
+  color: var(--accent-secondary);
+  font-weight: 600;
+  margin-left: 0.5rem;
+}
+
+.auth-link:hover {
+  text-decoration: underline;
+}
+
+@media (min-width: 768px) {
+  .auth-image-side {
+    display: block;
+  }
+}
+
+@media (max-width: 767px) {
+  .auth-form-side {
+    padding: 2rem;
+  }
+}
