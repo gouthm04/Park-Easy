@@ -281,8 +281,8 @@ const AddSpace = () => {
             Your parking space <strong>{formData.title}</strong> is now live on ParkEasy. Drivers can now view and book your space.
           </p>
           <div style={{ display: 'flex', gap: '15px', justifyContent: 'center' }}>
-            <button className="glass-btn secondary" onClick={() => window.location.reload()}>List Another</button>
-            <button className="glass-btn primary" onClick={() => window.location.href = '/dashboard'}>Go to Dashboard</button>
+            <button className="glass-btn secondary" onClick={() => window.location.reload()}>List Another Space</button>
+            <button className="glass-btn primary" onClick={() => window.location.href = '/host/listings'}>My Spaces</button>
           </div>
         </div>
       </div>

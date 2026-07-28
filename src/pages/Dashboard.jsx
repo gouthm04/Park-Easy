@@ -22,7 +22,7 @@ const Dashboard = () => {
   const user = { name: "John Doe" };
   const hasActiveBooking = true;
   // Dummy state for whether the user has listings
-  const isHost = false;
+  const isHost = true;
   
   const recentActivity = [
     { id: 1, title: "Tech Hub Underground", date: "Oct 12, 2026", time: "2:00 PM - 5:00 PM", status: "Completed", amount: "₹300" },

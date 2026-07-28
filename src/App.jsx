@@ -6,6 +6,7 @@ import Register from './pages/Register';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import AddSpace from './pages/AddSpace';
+import HostListings from './pages/HostListings';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/host/spaces/add" element={<AddSpace />} />
+          <Route path="/host/listings" element={<HostListings />} />
         </Routes>
         <Footer />
       </div>
