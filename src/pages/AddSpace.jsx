@@ -1,8 +1,11 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { motion } from 'framer-motion';
+import { useParams, useNavigate } from 'react-router-dom';
 import { MapPin, Camera, CheckCircle2, ChevronRight, ChevronLeft, Search, X, ImagePlus, Minus, Plus, ShieldCheck, Key, UserCheck, AlertCircle } from 'lucide-react';
 import { MapContainer, TileLayer, Marker, useMap } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
+import { mockListings } from '../data/mockListings';
 import './AddSpace.css';
 
 // Fix Leaflet's default icon path issues in React
@@ -17,6 +20,10 @@ let DefaultIcon = L.icon({
 L.Marker.prototype.options.icon = DefaultIcon;
 
 const AddSpace = () => {
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const isEditMode = Boolean(id);
+
   const [step, setStep] = useState(1);
   const fileInputRef = useRef(null);
   
@@ -49,6 +56,34 @@ const AddSpace = () => {
   const [errors, setErrors] = useState({});
   const [submitStatus, setSubmitStatus] = useState('idle'); // 'idle' | 'submitting' | 'success'
   const [canSubmit, setCanSubmit] = useState(false);
+
+  // Load existing data if editing
+  useEffect(() => {
+    if (isEditMode) {
+      const existingListing = mockListings.find(l => l.id === parseInt(id));
+      if (existingListing) {
+        setFormData({
+          title: existingListing.title || '',
+          type: existingListing.type || 'driveway',
+          vehicleSize: existingListing.vehicleSize || 'standard',
+          capacity: existingListing.capacity || 1,
+          allocationType: existingListing.allocationType || 'unassigned',
+          spots: existingListing.spots || [],
+          accessType: existingListing.accessType || 'none',
+          parkingInstructions: existingListing.parkingInstructions || '',
+          displayAddress: existingListing.address || existingListing.location || '',
+          priceHourly: existingListing.priceHourly || '',
+          priceDaily: existingListing.priceDaily || '',
+          features: existingListing.features || { cctv: false, gated: false, ev: false, covered: false },
+          lat: existingListing.lat || 28.6139,
+          lng: existingListing.lng || 77.2090,
+        });
+        if (existingListing.images) {
+          setPhotos(existingListing.images);
+        }
+      }
+    }
+  }, [id, isEditMode]);
 
   useEffect(() => {
     if (step === 4) {
@@ -276,13 +311,15 @@ const AddSpace = () => {
           }}>
             <CheckCircle2 size={40} />
           </div>
-          <h2 className="text-accent-gradient" style={{ fontSize: '2rem', marginBottom: '15px' }}>Listing Published!</h2>
+          <h2 className="text-accent-gradient" style={{ fontSize: '2rem', marginBottom: '15px' }}>
+            {isEditMode ? 'Changes Saved!' : 'Listing Published!'}
+          </h2>
           <p className="text-secondary" style={{ marginBottom: '30px', lineHeight: '1.5' }}>
-            Your parking space <strong>{formData.title}</strong> is now live on ParkEasy. Drivers can now view and book your space.
+            Your parking space <strong>{formData.title}</strong> has been {isEditMode ? 'updated' : 'published on ParkEasy'}.
           </p>
           <div style={{ display: 'flex', gap: '15px', justifyContent: 'center' }}>
-            <button className="glass-btn secondary" onClick={() => window.location.reload()}>List Another Space</button>
-            <button className="glass-btn primary" onClick={() => window.location.href = '/host/listings'}>My Spaces</button>
+            {!isEditMode && <button className="glass-btn secondary" onClick={() => window.location.reload()}>List Another Space</button>}
+            <button className="glass-btn primary" onClick={() => navigate('/host/listings')}>My Spaces</button>
           </div>
         </div>
       </div>
@@ -292,8 +329,10 @@ const AddSpace = () => {
   return (
     <div className="add-space-container">
       <div className="add-space-header">
-        <h1 className="text-accent-gradient animate-fade-in">List Your Space</h1>
-        <p className="text-secondary animate-fade-in delay-1">Turn your unused parking space into income.</p>
+        <h1 className="text-accent-gradient animate-fade-in">{isEditMode ? 'Edit Your Space' : 'List Your Space'}</h1>
+        <p className="text-secondary animate-fade-in delay-1">
+          {isEditMode ? 'Update your space details, pricing, and availability.' : 'Turn your unused parking space into income.'}
+        </p>
       </div>
 
       {/* 4-Step Indicator */}
@@ -547,7 +586,7 @@ const AddSpace = () => {
                   onClick={handleSubmit}
                   disabled={submitStatus === 'submitting' || !canSubmit}
                 >
-                  {submitStatus === 'submitting' ? 'Publishing...' : 'Publish Listing'} 
+                  {submitStatus === 'submitting' ? (isEditMode ? 'Saving...' : 'Publishing...') : (isEditMode ? 'Save Changes' : 'Publish Listing')} 
                   {submitStatus !== 'submitting' && <CheckCircle2 size={18} className="ml-2" />}
                 </button>
               )}

@@ -1,0 +1,96 @@
+export const mockListings = [
+  {
+    id: 1,
+    title: "Spacious Driveway near Downtown",
+    type: "driveway",
+    vehicleSize: "standard",
+    location: "123 Business Avenue, Block A",
+    address: "123 Business Avenue, Block A",
+    lat: 28.6139,
+    lng: 77.2090,
+    capacity: 1,
+    occupied: 0,
+    allocationType: "unassigned",
+    spots: [],
+    accessType: "none",
+    parkingInstructions: "Park anywhere on the driveway, just ensure not to block the sidewalk.",
+    priceHourly: 30,
+    priceDaily: 300,
+    status: "Active",
+    rating: 4.8,
+    reviews: 24,
+    features: {
+      cctv: true,
+      gated: false,
+      ev: false,
+      covered: false,
+    },
+    images: []
+  },
+  {
+    id: 2,
+    title: "Secure Underground Garage",
+    type: "garage",
+    vehicleSize: "suv",
+    location: "DLF City Complex, Basement 2",
+    address: "DLF City Complex, Basement 2",
+    lat: 28.6210,
+    lng: 77.2100,
+    capacity: 4,
+    occupied: 1,
+    allocationType: "assigned",
+    spots: [
+      { id: 1, label: "A-11" },
+      { id: 2, label: "A-12" },
+      { id: 3, label: "A-13" },
+      { id: 4, label: "A-14" }
+    ],
+    accessType: "security_gate",
+    parkingInstructions: "Show your booking QR code to the security guard at Gate 2. Proceed to Basement 2 and find your assigned spot.",
+    priceHourly: 50,
+    priceDaily: 450,
+    status: "Active",
+    rating: 4.9,
+    reviews: 12,
+    features: {
+      cctv: true,
+      gated: true,
+      ev: true,
+      covered: true,
+    },
+    images: [
+      { preview: "https://images.unsplash.com/photo-1573348722427-f1d6819fdf98?auto=format&fit=crop&q=80" },
+      { preview: "https://images.unsplash.com/photo-1621293954908-907159247fc8?auto=format&fit=crop&q=80" }
+    ]
+  },
+  {
+    id: 3,
+    title: "Empty Lot - Airport Long Term",
+    type: "lot",
+    vehicleSize: "oversized",
+    location: "Terminal 2 Outer Ring",
+    address: "Terminal 2 Outer Ring",
+    lat: 28.5562,
+    lng: 77.1000,
+    capacity: 10,
+    occupied: 0,
+    allocationType: "unassigned",
+    spots: [],
+    accessType: "none",
+    parkingInstructions: "Enter through the south gate. Park in any available unmarked space.",
+    priceHourly: null,
+    priceDaily: 800,
+    status: "Draft",
+    rating: 0,
+    reviews: 0,
+    features: {
+      cctv: false,
+      gated: true,
+      ev: false,
+      covered: false,
+    },
+    images: [
+      { preview: "https://images.unsplash.com/photo-1506521781263-d8422e82f27a?auto=format&fit=crop&q=80" }
+    ]
+  }
+];

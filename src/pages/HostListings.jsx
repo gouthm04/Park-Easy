@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import { Link } from 'react-router-dom';
-import { MapPin, Plus, Edit2, Calendar, Star, MoreHorizontal, Eye } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Link, useNavigate } from 'react-router-dom';
+import { MapPin, Plus, Edit2, Calendar, Star, MoreHorizontal, Eye, Trash2, X } from 'lucide-react';
+import { mockListings as initialListings } from '../data/mockListings';
 import './HostListings.css';
 
 const fadeUp = {
@@ -18,60 +19,51 @@ const staggerContainer = {
 };
 
 const HostListings = () => {
-  // Dummy data based on the new capacity and inventory model
-  const [listings, setListings] = useState([
-    {
-      id: 1,
-      title: "Spacious Driveway near Downtown",
-      type: "Driveway",
-      vehicleSize: "Standard",
-      location: "123 Business Avenue, Block A",
-      capacity: 1,
-      occupied: 0, // Mock for availability
-      allocationType: "unassigned",
-      priceHourly: 30,
-      priceDaily: 300,
-      status: "Active",
-      rating: 4.8,
-      reviews: 24,
-      image: null // Removed image to demonstrate fallback
-    },
-    {
-      id: 2,
-      title: "Secure Underground Garage",
-      type: "Garage",
-      vehicleSize: "SUV / Minivan",
-      location: "DLF City Complex, Basement 2",
-      capacity: 4,
-      occupied: 1, // Mock for availability
-      allocationType: "assigned",
-      priceHourly: 50,
-      priceDaily: 450,
-      status: "Active",
-      rating: 4.9,
-      reviews: 12,
-      image: "https://images.unsplash.com/photo-1573348722427-f1d6819fdf98?auto=format&fit=crop&q=80"
-    },
-    {
-      id: 3,
-      title: "Empty Lot - Airport Long Term",
-      type: "Parking Lot",
-      vehicleSize: "Oversized",
-      location: "Terminal 2 Outer Ring",
-      capacity: 10,
-      occupied: 0,
-      allocationType: "unassigned",
-      priceHourly: null,
-      priceDaily: 800,
-      status: "Draft",
-      rating: 0,
-      reviews: 0,
-      image: "https://images.unsplash.com/photo-1506521781263-d8422e82f27a?auto=format&fit=crop&q=80"
-    }
-  ]);
+  const navigate = useNavigate();
+  const [listings, setListings] = useState(initialListings);
+  
+  // State for Dropdown Menu
+  const [activeDropdown, setActiveDropdown] = useState(null);
+  
+  // State for Delete Modal
+  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+  const [listingToDelete, setListingToDelete] = useState(null);
+
+  const toggleDropdown = (id, e) => {
+    e.stopPropagation();
+    setActiveDropdown(activeDropdown === id ? null : id);
+  };
+
+  // Close dropdown when clicking outside (simple hack: close on any action)
+  const closeDropdown = () => setActiveDropdown(null);
+
+  const handleDeleteClick = (listing) => {
+    setListingToDelete(listing);
+    setDeleteModalOpen(true);
+    closeDropdown();
+  };
+
+  const confirmDelete = () => {
+    setListings(prev => prev.filter(l => l.id !== listingToDelete.id));
+    setDeleteModalOpen(false);
+    setListingToDelete(null);
+  };
+
+  const cancelDelete = () => {
+    setDeleteModalOpen(false);
+    setListingToDelete(null);
+  };
+
+  const handleEdit = (id) => {
+    navigate(`/host/spaces/edit/${id}`);
+  };
+
+  const handleView = (id) => {
+    navigate(`/space/${id}`);
+  };
 
   return (
-    <div className="host-listings-container">
+    <div className="host-listings-container" onClick={closeDropdown}>
       <div className="host-listings-header">
         <div>
           <h1 className="text-accent-gradient">My Spaces</h1>
@@ -90,8 +82,8 @@ const HostListings = () => {
       >
         {listings.map(listing => (
           <motion.div key={listing.id} className="listing-card glass-panel" variants={fadeUp}>
-            <div className="listing-image" style={listing.image ? { backgroundImage: `url(${listing.image})` } : {}}>
-              {!listing.image && (
+            <div className="listing-image" style={listing.images && listing.images.length > 0 ? { backgroundImage: `url(${listing.images[0].preview})` } : {}}>
+              {(!listing.images || listing.images.length === 0) && (
                 <div className="listing-image-fallback">
                   <MapPin size={40} className="fallback-icon" />
                   <div className="fallback-text">No Cover Photo</div>
@@ -152,33 +144,104 @@ const HostListings = () => {
 
               {listing.status === 'Draft' ? (
                 <div className="listing-actions">
-                  <button className="glass-btn secondary flex-1" title="Continue Editing">
+                  <button className="glass-btn secondary flex-1" title="Continue Editing" onClick={() => handleEdit(listing.id)}>
                     <Edit2 size={16} /> Continue Editing
                   </button>
-                  <button className="glass-btn secondary flex-1" title="Preview Listing">
+                  <button className="glass-btn secondary flex-1" title="Preview Listing" onClick={() => handleView(listing.id)}>
                     <Eye size={16} /> Preview
                   </button>
-                  <button className="glass-btn icon-only" title="More Options">
-                    <MoreHorizontal size={18} />
-                  </button>
+                  
+                  <div className="overflow-menu-wrapper" style={{ position: 'relative' }}>
+                    <button className="glass-btn icon-only" title="More Options" onClick={(e) => toggleDropdown(listing.id, e)}>
+                      <MoreHorizontal size={18} />
+                    </button>
+                    <AnimatePresence>
+                      {activeDropdown === listing.id && (
+                        <motion.div 
+                          className="dropdown-menu glass-panel"
+                          initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                          animate={{ opacity: 1, y: 0, scale: 1 }}
+                          exit={{ opacity: 0, y: 10, scale: 0.95 }}
+                          transition={{ duration: 0.15 }}
+                        >
+                          <div className="dropdown-item danger" onClick={() => handleDeleteClick(listing)}>
+                            <Trash2 size={16} /> Delete Space
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
                 </div>
               ) : (
                 <div className="listing-actions">
-                  <button className="glass-btn secondary flex-1" title="Edit Space">
+                  <button className="glass-btn secondary flex-1" title="Edit Space" onClick={() => handleEdit(listing.id)}>
                     <Edit2 size={16} /> Edit
                   </button>
                   <button className="glass-btn secondary flex-1" title="Manage Bookings">
                     <Calendar size={16} /> Bookings
                   </button>
-                  <button className="glass-btn icon-only" title="More Options">
-                    <MoreHorizontal size={18} />
-                  </button>
+
+                  <div className="overflow-menu-wrapper" style={{ position: 'relative' }}>
+                    <button className="glass-btn icon-only" title="More Options" onClick={(e) => toggleDropdown(listing.id, e)}>
+                      <MoreHorizontal size={18} />
+                    </button>
+                    <AnimatePresence>
+                      {activeDropdown === listing.id && (
+                        <motion.div 
+                          className="dropdown-menu glass-panel"
+                          initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                          animate={{ opacity: 1, y: 0, scale: 1 }}
+                          exit={{ opacity: 0, y: 10, scale: 0.95 }}
+                          transition={{ duration: 0.15 }}
+                        >
+                          <div className="dropdown-item" onClick={() => handleView(listing.id)}>
+                            <Eye size={16} /> View as Driver
+                          </div>
+                          <div className="dropdown-divider"></div>
+                          <div className="dropdown-item danger" onClick={() => handleDeleteClick(listing)}>
+                            <Trash2 size={16} /> Delete Space
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
                 </div>
               )}
             </div>
           </motion.div>
         ))}
       </motion.div>
+
+      {/* Delete Confirmation Modal */}
+      <AnimatePresence>
+        {deleteModalOpen && listingToDelete && (
+          <motion.div 
+            className="modal-overlay"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          >
+            <motion.div 
+              className="modal-content glass-panel"
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+            >
+              <button className="modal-close" onClick={cancelDelete}><X size={20} /></button>
+              <h2 className="modal-title text-accent-gradient">Delete this space?</h2>
+              <p className="modal-body text-secondary">
+                <strong>"{listingToDelete.title}"</strong> will be permanently removed from your listings.
+                <br/><br/>
+                This action cannot be undone.
+              </p>
+              <div className="modal-actions">
+                <button className="glass-btn secondary" onClick={cancelDelete}>Cancel</button>
+                <button className="glass-btn danger-btn" onClick={confirmDelete}>Delete Space</button>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };
