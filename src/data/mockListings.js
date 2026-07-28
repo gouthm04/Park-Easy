@@ -85,7 +85,7 @@ export const mockListings = [
     reviews: 0,
     features: {
       cctv: false,
-      gated: true,
+      gated: false,
       ev: false,
       covered: false,
     },

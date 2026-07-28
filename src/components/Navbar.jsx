@@ -18,24 +18,28 @@ const Navbar = () => {
     setTheme(prevTheme => prevTheme === 'dark' ? 'light' : 'dark');
   };
 
+  const isMinimal = location.pathname.startsWith('/space/') || location.pathname.startsWith('/host/spaces/add') || location.pathname.startsWith('/host/spaces/edit');
+
   return (
-    <nav className="navbar glass-panel">
+    <nav className={`navbar glass-panel ${isMinimal ? 'minimal' : ''}`}>
       <div className="navbar-container">
         <Link to="/" className="navbar-logo">
           <MapPin className="logo-icon" size={28} />
           <span className="logo-text text-accent-gradient">ParkEasy</span>
         </Link>
         
-        <div className="navbar-links">
-          <Link to="/" className={`nav-link ${location.pathname === '/' ? 'active' : ''}`}>Home</Link>
-          <Link to="/search" className={`nav-link ${location.pathname === '/search' ? 'active' : ''}`}>Find Parking</Link>
-          <Link to="/dashboard" className={`nav-link ${location.pathname === '/dashboard' ? 'active' : ''}`}>Dashboard</Link>
-          {isHost ? (
-            <Link to="/host/listings" className={`nav-link ${location.pathname === '/host/listings' ? 'active' : ''}`}>My Listings</Link>
-          ) : (
-            <Link to="/host" className={`nav-link ${location.pathname === '/host' ? 'active' : ''}`}>Become a Host</Link>
-          )}
-        </div>
+        {!isMinimal && (
+          <div className="navbar-links">
+            <Link to="/" className={`nav-link ${location.pathname === '/' ? 'active' : ''}`}>Home</Link>
+            <Link to="/search" className={`nav-link ${location.pathname === '/search' ? 'active' : ''}`}>Find Parking</Link>
+            <Link to="/dashboard" className={`nav-link ${location.pathname === '/dashboard' ? 'active' : ''}`}>Dashboard</Link>
+            {isHost ? (
+              <Link to="/host/listings" className={`nav-link ${location.pathname === '/host/listings' ? 'active' : ''}`}>My Listings</Link>
+            ) : (
+              <Link to="/host" className={`nav-link ${location.pathname === '/host' ? 'active' : ''}`}>Become a Host</Link>
+            )}
+          </div>
+        )}
         
         <div className="navbar-actions">
           <button 

@@ -1,15 +1,33 @@
 .space-details-page {
   max-width: 1200px;
-  margin: 80px auto 60px;
+  margin: 120px auto 20px; /* Reduced bottom margin to tighten footer gap */
   padding: 0 20px;
 }
 
-.back-nav {
-  margin-bottom: 20px;
+.space-details-header-nav {
+  margin-bottom: 24px;
+}
+
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 0;
+  transition: color 0.2s ease;
+}
+
+.back-link:hover {
+  color: var(--text-primary);
 }
 
 .hero-header {
-  height: 400px;
+  height: 320px;
   border-radius: 20px;
   background-size: cover;
   background-position: center;

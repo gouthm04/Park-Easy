@@ -45,9 +45,9 @@ const SpaceDetails = () => {
 
   return (
     <div className="space-details-page">
-      <div className="back-nav">
-        <button className="glass-btn secondary small" onClick={() => navigate(-1)}>
-          <ArrowLeft size={16} style={{ marginRight: '6px' }} /> Back
+      <div className="space-details-header-nav">
+        <button className="back-link" onClick={() => navigate(-1)}>
+          <ArrowLeft size={16} /> Back to search
         </button>
       </div>
 

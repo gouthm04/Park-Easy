@@ -9,6 +9,25 @@
   padding: 1rem 2rem;
   display: flex;
   justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.navbar.minimal {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  max-width: 100%;
+  border-radius: 0;
+  border: none;
+  background: transparent;
+  backdrop-filter: none;
+  box-shadow: none;
+  padding: 1.5rem 20px 0;
+}
+
+.navbar.minimal .navbar-container {
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 .navbar-container {
