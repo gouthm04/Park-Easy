@@ -1,9 +1,26 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { MapPin, Twitter, Facebook, Instagram, Github } from 'lucide-react';
 import './Footer.css';
 
 const Footer = () => {
+  const location = useLocation();
+  const isMinimal = location.pathname === '/host/spaces/add';
+
+  if (isMinimal) {
+    return (
+      <footer className="footer-section" style={{ padding: '20px 0', borderTop: '1px solid var(--border-subtle)', background: 'var(--bg-footer-bottom)' }}>
+        <div className="container flex-center">
+          <div className="footer-bottom" style={{ border: 'none', margin: 0, padding: 0, display: 'flex', gap: '20px' }}>
+            <Link to="/terms" className="text-secondary" style={{ fontSize: '0.9rem' }}>Terms</Link>
+            <Link to="/privacy" className="text-secondary" style={{ fontSize: '0.9rem' }}>Privacy</Link>
+            <Link to="/help" className="text-secondary" style={{ fontSize: '0.9rem' }}>Help</Link>
+          </div>
+        </div>
+      </footer>
+    );
+  }
+
   return (
     <footer className="footer-section">
       <div className="container footer-container">
